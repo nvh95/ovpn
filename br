@@ -1,0 +1,56 @@
+void Draw(int x, int y) {
+        glPointSize(1);
+        glBegin(GL_POINTS);
+        glColor3f(0, 0, 1);
+        glVertex3f(x, y, 0);
+        glEnd();
+        glFlush();
+    }
+    //A Function to determine the sign of an integer
+int sign(int i) {
+        if (i > 0) {
+            return 1;
+        } else if (i < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+    //DrawLine According to Bresenham’s Algorithm
+void DrawLine(int x0, int y0, int x1, int y1) {
+    int dx = x1 - x0; //delta x
+    int dy = y1 - y0; //delta y
+    int x = x0;
+    int y = y0;
+    int sgnx = sign(dx);
+    int sgny = sign(dy);
+    if (abs(dx) > abs(dy)) {
+        int F = 2 * dy - dx; //Calculate the position of Midpoint with the ideal line
+        while (true) {
+            Draw(x, y);
+            if (x == x1)
+                return;
+            if (F < 0) {
+                F += 2 * dy;
+            } else {
+                y = y + sgny;
+                F += 2 * (dy - dx);
+            }
+            x = x + sgnx;
+        }
+    } else {
+        int F = 2 * dx - dy;
+        while (true) {
+            Draw(x, y);
+            if (y == y1)
+                return;
+            if (F < 0) {
+                F += 2 * dx;
+            } else {
+                x = x + sgnx;
+                F += 2 * (dx - dy);
+            }
+            y = y + sgny;
+        }
+    }
+}
